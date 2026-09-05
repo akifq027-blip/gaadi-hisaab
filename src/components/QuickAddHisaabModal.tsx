@@ -206,10 +206,12 @@ export const QuickAddHisaabModal: React.FC<Props> = ({
           {/* Row 1: Date & Vehicle */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wide mb-1">
+              <label htmlFor="quick-date" className="block text-[11px] font-bold text-slate-700 uppercase tracking-wide mb-1">
                 📅 Date
               </label>
               <input
+                id="quick-date"
+                name="date"
                 type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
@@ -219,10 +221,12 @@ export const QuickAddHisaabModal: React.FC<Props> = ({
             </div>
 
             <div>
-              <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wide mb-1">
+              <label htmlFor="quick-vehicle" className="block text-[11px] font-bold text-slate-700 uppercase tracking-wide mb-1">
                 🚚 {t.vehicle} *
               </label>
               <select
+                id="quick-vehicle"
+                name="vehicleId"
                 value={vehicleId}
                 onChange={(e) => setVehicleId(e.target.value)}
                 className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold text-slate-800 focus:bg-white focus:border-amber-500 outline-none"
@@ -239,11 +243,13 @@ export const QuickAddHisaabModal: React.FC<Props> = ({
 
           {/* Row 2: Customer / Party */}
           <div>
-            <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wide mb-1">
+            <label htmlFor="quick-customer" className="block text-[11px] font-bold text-slate-700 uppercase tracking-wide mb-1">
               👤 {t.customer} / Party
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               <select
+                id="quick-customer"
+                name="customerId"
                 value={customerId}
                 onChange={(e) => {
                   setCustomerId(e.target.value);
@@ -265,6 +271,8 @@ export const QuickAddHisaabModal: React.FC<Props> = ({
               {!customerId && (
                 <div className="flex space-x-1.5">
                   <input
+                    id="quick-customer-name"
+                    name="customCustomerName"
                     type="text"
                     placeholder="Party Name"
                     value={customCustomerName}
@@ -272,6 +280,8 @@ export const QuickAddHisaabModal: React.FC<Props> = ({
                     className="w-1/2 bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-2 text-xs text-slate-800 focus:bg-white focus:border-amber-500 outline-none"
                   />
                   <input
+                    id="quick-customer-phone"
+                    name="customCustomerPhone"
                     type="tel"
                     inputMode="tel"
                     placeholder="Phone"
@@ -287,10 +297,12 @@ export const QuickAddHisaabModal: React.FC<Props> = ({
           {/* Row 3: Pickup & Drop Location */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wide mb-1">
+              <label htmlFor="quick-pickup" className="block text-[11px] font-bold text-slate-700 uppercase tracking-wide mb-1">
                 📍 {t.pickup} *
               </label>
               <input
+                id="quick-pickup"
+                name="pickupLocation"
                 type="text"
                 placeholder="e.g., Bowenpally Mandi"
                 value={pickupLocation}
@@ -301,10 +313,12 @@ export const QuickAddHisaabModal: React.FC<Props> = ({
             </div>
 
             <div>
-              <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wide mb-1">
+              <label htmlFor="quick-drop" className="block text-[11px] font-bold text-slate-700 uppercase tracking-wide mb-1">
                 🏁 {t.drop} *
               </label>
               <input
+                id="quick-drop"
+                name="dropLocation"
                 type="text"
                 placeholder="e.g., Shamshabad Hub"
                 value={dropLocation}
@@ -318,7 +332,7 @@ export const QuickAddHisaabModal: React.FC<Props> = ({
           {/* Quick Goods Type Selector Pills */}
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label className="text-[11px] font-bold text-slate-700 uppercase tracking-wide">
+              <label htmlFor="quick-goods" className="text-[11px] font-bold text-slate-700 uppercase tracking-wide">
                 📦 {t.goods}
               </label>
               <span className="text-[10px] text-slate-500">Tap quick tag</span>
@@ -340,6 +354,8 @@ export const QuickAddHisaabModal: React.FC<Props> = ({
               ))}
             </div>
             <input
+              id="quick-goods"
+              name="goodsType"
               type="text"
               value={goodsType}
               onChange={(e) => setGoodsType(e.target.value)}
@@ -351,10 +367,12 @@ export const QuickAddHisaabModal: React.FC<Props> = ({
           <div className="bg-amber-50/70 p-3.5 rounded-2xl border border-amber-200/80 space-y-3">
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-black text-amber-950 uppercase tracking-wide mb-1">
+                <label htmlFor="quick-freight" className="block text-xs font-black text-amber-950 uppercase tracking-wide mb-1">
                   💰 {t.freight} (₹) *
                 </label>
                 <input
+                  id="quick-freight"
+                  name="freightAmount"
                   type="number"
                   inputMode="numeric"
                   placeholder="0"
@@ -366,10 +384,12 @@ export const QuickAddHisaabModal: React.FC<Props> = ({
               </div>
 
               <div>
-                <label className="block text-xs font-black text-amber-950 uppercase tracking-wide mb-1">
+                <label htmlFor="quick-diesel" className="block text-xs font-black text-amber-950 uppercase tracking-wide mb-1">
                   ⛽ {t.diesel} Cost (₹)
                 </label>
                 <input
+                  id="quick-diesel"
+                  name="dieselCost"
                   type="number"
                   inputMode="numeric"
                   placeholder="0"
@@ -383,10 +403,12 @@ export const QuickAddHisaabModal: React.FC<Props> = ({
             {/* Payment Received Now */}
             <div className="grid grid-cols-2 gap-3 pt-1 border-t border-amber-200">
               <div>
-                <label className="block text-[11px] font-bold text-emerald-900 uppercase tracking-wide mb-1">
+                <label htmlFor="quick-paid" className="block text-[11px] font-bold text-emerald-900 uppercase tracking-wide mb-1">
                   💵 Paid / Received (₹)
                 </label>
                 <input
+                  id="quick-paid"
+                  name="paidAmount"
                   type="number"
                   inputMode="numeric"
                   placeholder="0"
@@ -397,10 +419,12 @@ export const QuickAddHisaabModal: React.FC<Props> = ({
               </div>
 
               <div>
-                <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wide mb-1">
+                <label htmlFor="quick-payment-mode" className="block text-[11px] font-bold text-slate-700 uppercase tracking-wide mb-1">
                   Payment Mode
                 </label>
                 <select
+                  id="quick-payment-mode"
+                  name="paymentMethod"
                   value={paymentMethod}
                   onChange={(e: any) => setPaymentMethod(e.target.value)}
                   className="w-full bg-white border border-slate-300 rounded-xl px-2.5 py-2 text-xs font-bold text-slate-800 outline-none"
@@ -430,8 +454,10 @@ export const QuickAddHisaabModal: React.FC<Props> = ({
                 {/* Odometer KM */}
                 <div className="grid grid-cols-3 gap-2">
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-600">Start KM</label>
+                    <label htmlFor="quick-start-km" className="block text-[10px] font-bold text-slate-600">Start KM</label>
                     <input
+                      id="quick-start-km"
+                      name="startKm"
                       type="number"
                       inputMode="numeric"
                       value={startKm}
@@ -440,8 +466,10 @@ export const QuickAddHisaabModal: React.FC<Props> = ({
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-600">End KM</label>
+                    <label htmlFor="quick-end-km" className="block text-[10px] font-bold text-slate-600">End KM</label>
                     <input
+                      id="quick-end-km"
+                      name="endKm"
                       type="number"
                       inputMode="numeric"
                       value={endKm}
@@ -450,7 +478,7 @@ export const QuickAddHisaabModal: React.FC<Props> = ({
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-600">Total KM</label>
+                    <span className="block text-[10px] font-bold text-slate-600">Total KM</span>
                     <div className="bg-slate-200/80 rounded-lg p-1.5 text-xs font-bold text-slate-800 text-center">
                       {totalKm} KM
                     </div>
@@ -460,8 +488,10 @@ export const QuickAddHisaabModal: React.FC<Props> = ({
                 {/* Additional Income Charges */}
                 <div className="grid grid-cols-3 gap-2">
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-600">Loading (₹)</label>
+                    <label htmlFor="quick-loading" className="block text-[10px] font-bold text-slate-600">Loading (₹)</label>
                     <input
+                      id="quick-loading"
+                      name="loadingCharge"
                       type="number"
                       inputMode="numeric"
                       value={loadingCharge}
@@ -470,8 +500,10 @@ export const QuickAddHisaabModal: React.FC<Props> = ({
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-600">Unloading (₹)</label>
+                    <label htmlFor="quick-unloading" className="block text-[10px] font-bold text-slate-600">Unloading (₹)</label>
                     <input
+                      id="quick-unloading"
+                      name="unloadingCharge"
                       type="number"
                       inputMode="numeric"
                       value={unloadingCharge}
@@ -480,8 +512,10 @@ export const QuickAddHisaabModal: React.FC<Props> = ({
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-600">Extra / Halting</label>
+                    <label htmlFor="quick-extra-charge" className="block text-[10px] font-bold text-slate-600">Extra / Halting</label>
                     <input
+                      id="quick-extra-charge"
+                      name="extraCharge"
                       type="number"
                       inputMode="numeric"
                       value={extraCharge}
@@ -494,8 +528,10 @@ export const QuickAddHisaabModal: React.FC<Props> = ({
                 {/* Other Expenses */}
                 <div className="grid grid-cols-3 gap-2">
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-600">Toll (₹)</label>
+                    <label htmlFor="quick-toll" className="block text-[10px] font-bold text-slate-600">Toll (₹)</label>
                     <input
+                      id="quick-toll"
+                      name="tollCost"
                       type="number"
                       inputMode="numeric"
                       value={tollCost}
@@ -504,8 +540,10 @@ export const QuickAddHisaabModal: React.FC<Props> = ({
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-600">Parking (₹)</label>
+                    <label htmlFor="quick-parking" className="block text-[10px] font-bold text-slate-600">Parking (₹)</label>
                     <input
+                      id="quick-parking"
+                      name="parkingCost"
                       type="number"
                       inputMode="numeric"
                       value={parkingCost}
@@ -514,8 +552,10 @@ export const QuickAddHisaabModal: React.FC<Props> = ({
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-600">Misc / Tea (₹)</label>
+                    <label htmlFor="quick-misc" className="block text-[10px] font-bold text-slate-600">Misc / Tea (₹)</label>
                     <input
+                      id="quick-misc"
+                      name="otherExpenses"
                       type="number"
                       inputMode="numeric"
                       value={otherExpenses}
@@ -527,8 +567,10 @@ export const QuickAddHisaabModal: React.FC<Props> = ({
 
                 {/* Driver */}
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-600 mb-1">Driver</label>
+                  <label htmlFor="quick-driver" className="block text-[10px] font-bold text-slate-600 mb-1">Driver</label>
                   <select
+                    id="quick-driver"
+                    name="driverId"
                     value={driverId}
                     onChange={(e) => setDriverId(e.target.value)}
                     className="w-full bg-white border border-slate-200 rounded-lg p-1.5 text-xs font-medium"

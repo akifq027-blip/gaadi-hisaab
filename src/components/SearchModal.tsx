@@ -56,6 +56,8 @@ export const SearchModal: React.FC<Props> = ({
         <div className="p-3.5 border-b border-slate-200 flex items-center space-x-3 bg-slate-50">
           <Search className="w-5 h-5 text-slate-400 shrink-0" />
           <input
+            id="global-search-input"
+            name="search"
             type="text"
             autoFocus
             placeholder="Search vehicles, drivers, parties, trips, bills..."

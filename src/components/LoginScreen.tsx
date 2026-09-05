@@ -306,7 +306,7 @@ export const LoginScreen: React.FC<Props> = ({ lang, onLanguageChange, onLoginSu
 
               {/* Login Input (Email / Mobile) */}
               <div>
-                <label className="block text-xs font-bold text-[#1A1A1A] mb-1.5">
+                <label htmlFor="login-identifier" className="block text-xs font-bold text-[#1A1A1A] mb-1.5">
                   {selectedRole === 'admin'
                     ? (lang === 'hi' ? 'एडमिन ईमेल या यूज़रनेम *' : 'Admin Email *')
                     : (lang === 'hi' ? 'मोबाइल नंबर या ईमेल *' : 'Mobile Number or Email *')}
@@ -320,6 +320,9 @@ export const LoginScreen: React.FC<Props> = ({ lang, onLanguageChange, onLoginSu
                     )}
                   </div>
                   <input
+                    id="login-identifier"
+                    name="username"
+                    autoComplete={selectedRole === 'admin' ? 'username email' : 'username tel'}
                     type={selectedRole === 'admin' ? 'email' : 'text'}
                     value={loginInput}
                     onChange={(e) => setLoginInput(e.target.value)}
@@ -336,7 +339,7 @@ export const LoginScreen: React.FC<Props> = ({ lang, onLanguageChange, onLoginSu
 
               {/* Password / PIN */}
               <div>
-                <label className="block text-xs font-bold text-[#1A1A1A] mb-1.5">
+                <label htmlFor="login-password" className="block text-xs font-bold text-[#1A1A1A] mb-1.5">
                   {selectedRole === 'admin'
                     ? (lang === 'hi' ? 'एडमिन पासवर्ड *' : 'Admin Password *')
                     : (lang === 'hi' ? 'पासवर्ड या 4-अंकों का पिन *' : 'Password or 4-Digit PIN *')}
@@ -346,6 +349,9 @@ export const LoginScreen: React.FC<Props> = ({ lang, onLanguageChange, onLoginSu
                     <KeyRound className="w-4 h-4 text-[#70706B]" />
                   </div>
                   <input
+                    id="login-password"
+                    name="password"
+                    autoComplete="current-password"
                     type={showPassword ? 'text' : 'password'}
                     value={passwordInput}
                     onChange={(e) => setPasswordInput(e.target.value)}
@@ -383,10 +389,13 @@ export const LoginScreen: React.FC<Props> = ({ lang, onLanguageChange, onLoginSu
             /* ================= REGISTRATION FORM ================= */
             <form onSubmit={handleSubmitRegister} className="space-y-3.5">
               <div>
-                <label className="block text-xs font-bold text-[#1A1A1A] mb-1">
+                <label htmlFor="reg-name" className="block text-xs font-bold text-[#1A1A1A] mb-1">
                   {lang === 'hi' ? 'आपका पूरा नाम *' : 'Full Name *'}
                 </label>
                 <input
+                  id="reg-name"
+                  name="fullName"
+                  autoComplete="name"
                   type="text"
                   value={regName}
                   onChange={(e) => setRegName(e.target.value)}
@@ -397,10 +406,13 @@ export const LoginScreen: React.FC<Props> = ({ lang, onLanguageChange, onLoginSu
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#1A1A1A] mb-1">
+                <label htmlFor="reg-business" className="block text-xs font-bold text-[#1A1A1A] mb-1">
                   {lang === 'hi' ? 'ट्रांसपोर्ट या फर्म का नाम' : 'Transport / Business Name'}
                 </label>
                 <input
+                  id="reg-business"
+                  name="businessName"
+                  autoComplete="organization"
                   type="text"
                   value={regBusiness}
                   onChange={(e) => setRegBusiness(e.target.value)}
@@ -411,10 +423,13 @@ export const LoginScreen: React.FC<Props> = ({ lang, onLanguageChange, onLoginSu
 
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <label className="block text-xs font-bold text-[#1A1A1A] mb-1">
+                  <label htmlFor="reg-phone" className="block text-xs font-bold text-[#1A1A1A] mb-1">
                     {lang === 'hi' ? 'मोबाइल नंबर *' : 'Mobile Number *'}
                   </label>
                   <input
+                    id="reg-phone"
+                    name="phone"
+                    autoComplete="tel"
                     type="tel"
                     value={regPhone}
                     onChange={(e) => setRegPhone(e.target.value)}
@@ -424,10 +439,13 @@ export const LoginScreen: React.FC<Props> = ({ lang, onLanguageChange, onLoginSu
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-[#1A1A1A] mb-1">
+                  <label htmlFor="reg-city" className="block text-xs font-bold text-[#1A1A1A] mb-1">
                     {lang === 'hi' ? 'शहर (City)' : 'City'}
                   </label>
                   <input
+                    id="reg-city"
+                    name="city"
+                    autoComplete="address-level2"
                     type="text"
                     value={regCity}
                     onChange={(e) => setRegCity(e.target.value)}
@@ -438,10 +456,13 @@ export const LoginScreen: React.FC<Props> = ({ lang, onLanguageChange, onLoginSu
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#1A1A1A] mb-1">
+                <label htmlFor="reg-email" className="block text-xs font-bold text-[#1A1A1A] mb-1">
                   {lang === 'hi' ? 'ईमेल (वैकल्पिक)' : 'Email (Optional)'}
                 </label>
                 <input
+                  id="reg-email"
+                  name="email"
+                  autoComplete="email"
                   type="email"
                   value={regEmail}
                   onChange={(e) => setRegEmail(e.target.value)}
@@ -451,10 +472,13 @@ export const LoginScreen: React.FC<Props> = ({ lang, onLanguageChange, onLoginSu
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#1A1A1A] mb-1">
+                <label htmlFor="reg-password" className="block text-xs font-bold text-[#1A1A1A] mb-1">
                   {lang === 'hi' ? 'पासवर्ड या 4-अंकों का पिन *' : 'Create Password or PIN *'}
                 </label>
                 <input
+                  id="reg-password"
+                  name="newPassword"
+                  autoComplete="new-password"
                   type="password"
                   value={regPassword}
                   onChange={(e) => setRegPassword(e.target.value)}

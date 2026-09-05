@@ -31,6 +31,14 @@ async function startServer() {
   // API Routes
   app.use('/api', apiRouter);
 
+  // Manifest endpoint for PWA installability without CORS or auth redirection
+  app.get(['/manifest.json', '/manifest.webmanifest'], (req, res) => {
+    res.setHeader('Content-Type', 'application/manifest+json; charset=utf-8');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.sendFile(path.join(process.cwd(), 'public', 'manifest.json'));
+  });
+
   // Health check
   app.get('/api/health', (req, res) => {
     res.json({
@@ -44,7 +52,10 @@ async function startServer() {
   // Vite Middleware setup for Frontend Single-Page Application
   if (process.env.NODE_ENV !== 'production') {
     const vite = await createViteServer({
-      server: { middlewareMode: true },
+      server: {
+        middlewareMode: true,
+        hmr: false, // Prevents WebSocket connection errors on closed ports
+      },
       appType: 'spa',
     });
     app.use(vite.middlewares);

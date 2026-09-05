@@ -92,10 +92,12 @@ export const ReceivePaymentModal: React.FC<Props> = ({
 
           {/* Customer Selection */}
           <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
+            <label htmlFor="recv-customer" className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
               Customer / Party *
             </label>
             <select
+              id="recv-customer"
+              name="customerId"
               value={customerId}
               onChange={(e) => setCustomerId(e.target.value)}
               className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-xs font-semibold text-slate-800 outline-none focus:bg-white focus:border-amber-500"
@@ -118,10 +120,12 @@ export const ReceivePaymentModal: React.FC<Props> = ({
 
           {/* Amount */}
           <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
+            <label htmlFor="recv-amount" className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
               Amount Received (₹) *
             </label>
             <input
+              id="recv-amount"
+              name="amount"
               type="number"
               inputMode="numeric"
               placeholder="e.g. 5000"
@@ -135,10 +139,12 @@ export const ReceivePaymentModal: React.FC<Props> = ({
           {/* Date & Payment Mode */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
+              <label htmlFor="recv-date" className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
                 Date
               </label>
               <input
+                id="recv-date"
+                name="paymentDate"
                 type="date"
                 value={paymentDate}
                 onChange={(e) => setPaymentDate(e.target.value)}
@@ -147,10 +153,12 @@ export const ReceivePaymentModal: React.FC<Props> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
+              <label htmlFor="recv-mode" className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
                 Mode
               </label>
               <select
+                id="recv-mode"
+                name="paymentMethod"
                 value={paymentMethod}
                 onChange={(e: any) => setPaymentMethod(e.target.value)}
                 className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold text-slate-800 outline-none"
@@ -166,10 +174,12 @@ export const ReceivePaymentModal: React.FC<Props> = ({
           {/* Reference No / Notes */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
+              <label htmlFor="recv-ref" className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
                 UPI / Cheque Ref
               </label>
               <input
+                id="recv-ref"
+                name="referenceNumber"
                 type="text"
                 placeholder="Optional"
                 value={referenceNumber}
@@ -179,10 +189,12 @@ export const ReceivePaymentModal: React.FC<Props> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
+              <label htmlFor="recv-notes" className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
                 Remark / Note
               </label>
               <input
+                id="recv-notes"
+                name="notes"
                 type="text"
                 placeholder="Optional"
                 value={notes}

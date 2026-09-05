@@ -124,10 +124,12 @@ export const AddExpenseModal: React.FC<Props> = ({
 
           {/* Amount */}
           <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
+            <label htmlFor="expense-amount" className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
               Amount (₹) *
             </label>
             <input
+              id="expense-amount"
+              name="amount"
               type="number"
               inputMode="numeric"
               placeholder="e.g. 150"
@@ -140,10 +142,12 @@ export const AddExpenseModal: React.FC<Props> = ({
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
+              <label htmlFor="expense-vehicle" className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
                 Vehicle
               </label>
               <select
+                id="expense-vehicle"
+                name="vehicleId"
                 value={vehicleId}
                 onChange={(e) => setVehicleId(e.target.value)}
                 className="w-full bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-2 text-xs font-semibold text-slate-800 outline-none"
@@ -158,10 +162,12 @@ export const AddExpenseModal: React.FC<Props> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
+              <label htmlFor="expense-date" className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
                 Date
               </label>
               <input
+                id="expense-date"
+                name="date"
                 type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
@@ -171,10 +177,12 @@ export const AddExpenseModal: React.FC<Props> = ({
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
+            <label htmlFor="expense-desc" className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
               Description / Detail
             </label>
             <input
+              id="expense-desc"
+              name="description"
               type="text"
               placeholder="e.g. Patancheru Toll Fastag / Tyre puncture patch"
               value={description}

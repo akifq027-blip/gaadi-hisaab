@@ -123,10 +123,12 @@ export const AddFuelModal: React.FC<Props> = ({
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
+              <label htmlFor="fuel-vehicle" className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
                 Vehicle *
               </label>
               <select
+                id="fuel-vehicle"
+                name="vehicleId"
                 value={vehicleId}
                 onChange={(e) => setVehicleId(e.target.value)}
                 className="w-full bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-2 text-xs font-semibold text-slate-800 outline-none"
@@ -141,10 +143,12 @@ export const AddFuelModal: React.FC<Props> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
+              <label htmlFor="fuel-date" className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
                 Date
               </label>
               <input
+                id="fuel-date"
+                name="date"
                 type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
@@ -155,10 +159,12 @@ export const AddFuelModal: React.FC<Props> = ({
 
           <div className="grid grid-cols-3 gap-2">
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
+              <label htmlFor="fuel-liters" className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
                 Liters *
               </label>
               <input
+                id="fuel-liters"
+                name="liters"
                 type="number"
                 step="0.01"
                 inputMode="decimal"
@@ -171,10 +177,12 @@ export const AddFuelModal: React.FC<Props> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
+              <label htmlFor="fuel-rate" className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
                 Rate (₹/L)
               </label>
               <input
+                id="fuel-rate"
+                name="ratePerLiter"
                 type="number"
                 step="0.01"
                 inputMode="decimal"
@@ -185,10 +193,12 @@ export const AddFuelModal: React.FC<Props> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
+              <label htmlFor="fuel-total" className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
                 Total (₹)
               </label>
               <input
+                id="fuel-total"
+                name="totalAmount"
                 type="number"
                 step="0.01"
                 inputMode="decimal"
@@ -202,10 +212,12 @@ export const AddFuelModal: React.FC<Props> = ({
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
+              <label htmlFor="fuel-odometer" className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
                 Odometer KM
               </label>
               <input
+                id="fuel-odometer"
+                name="odometerKm"
                 type="number"
                 inputMode="numeric"
                 placeholder="e.g. 45200"
@@ -216,10 +228,12 @@ export const AddFuelModal: React.FC<Props> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
+              <label htmlFor="fuel-station" className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">
                 Fuel Station
               </label>
               <input
+                id="fuel-station"
+                name="fuelStation"
                 type="text"
                 placeholder="e.g. Indian Oil / HP"
                 value={fuelStation}
