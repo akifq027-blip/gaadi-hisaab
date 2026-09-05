@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Rounded Base Canvas -->
+  <rect width="512" height="512" rx="108" fill="url(#bgGrad)" />
+  
+  <!-- Subtle Border / Frame -->
+  <rect x="12" y="12" width="488" height="488" rx="96" fill="none" stroke="#334155" stroke-width="6" />
+
+  <!-- Truck Body / Tata Ace & Pickup Silhouette -->
+  <!-- Cargo Bay -->
+  <rect x="80" y="170" width="200" height="150" rx="12" fill="#3b82f6" />
+  <!-- Cargo Rails -->
+  <line x1="100" y1="170" x2="100" y2="320" stroke="#1d4ed8" stroke-width="6" />
+  <line x1="150" y1="170" x2="150" y2="320" stroke="#1d4ed8" stroke-width="6" />
+  <line x1="200" y1="170" x2="200" y2="320" stroke="#1d4ed8" stroke-width="6" />
+  <line x1="250" y1="170" x2="250" y2="320" stroke="#1d4ed8" stroke-width="6" />
+  <line x1="80" y1="210" x2="280" y2="210" stroke="#60a5fa" stroke-width="4" stroke-dasharray="6,6" />
+
+  <!-- Cabin -->
+  <path d="M280 190 L340 190 L390 250 L410 250 C416 250 420 254 420 260 L420 320 L280 320 Z" fill="url(#accentGrad)" />
+  
+  <!-- Cabin Windshield -->
+  <path d="M335 204 L375 250 L292 250 L292 204 Z" fill="#93c5fd" opacity="0.9" />
+
+  <!-- Headlight -->
+  <circle cx="410" cy="285" r="8" fill="#fef08a" />
+  
+  <!-- Chassis Base -->
+  <rect x="70" y="316" width="360" height="16" rx="4" fill="#64748b" />
+
+  <!-- Wheels -->
+  <!-- Rear Wheel 1 -->
+  <circle cx="140" cy="336" r="42" fill="#090d16" stroke="#475569" stroke-width="10" />
+  <circle cx="140" cy="336" r="18" fill="#cbd5e1" />
+  <circle cx="140" cy="336" r="7" fill="#0f172a" />
+
+  <!-- Rear Wheel 2 / Front Wheel -->
+  <circle cx="360" cy="336" r="42" fill="#090d16" stroke="#475569" stroke-width="10" />
+  <circle cx="360" cy="336" r="18" fill="#cbd5e1" />
+  <circle cx="360" cy="336" r="7" fill="#0f172a" />
+
+  <!-- Hisaab / Rupee Badge (Overlay top right) -->
+  <circle cx="380" cy="130" r="64" fill="url(#greenGrad)" stroke="#ffffff" stroke-width="6" />
+  <!-- Rupee Symbol ₹ in white bold vector -->
+  <path d="M360 102 L402 102 M360 114 L402 114 M372 102 L372 136 C386 136 394 130 394 122 C394 112 384 108 372 108 M372 136 L398 162 M360 126 L384 126" 
+        stroke="#ffffff" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+
+  <!-- App Title Banner Bottom -->
+  <text x="256" y="440" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="44" fill="#f8fafc" letter-spacing="4">GAADI HISAAB</text>
+  <text x="256" y="475" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="600" font-size="20" fill="#94a3b8" letter-spacing="1">HISAAB • TRIP • GAADI</text>
+</svg>

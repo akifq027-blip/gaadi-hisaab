@@ -1,0 +1,6 @@
+{
+  "name": "GAADI HISAAB",
+  "description": "Digital driver diary, hisaab book, and transport fleet management app for Indian commercial vehicles.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
