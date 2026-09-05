@@ -1,6 +1,5 @@
 import express from 'express';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import { createServer as createViteServer } from 'vite';
 import dotenv from 'dotenv';
 import { initDatabase } from './server/db.js';
@@ -8,9 +7,6 @@ import { initMySQL } from './server/mysql.js';
 import { apiRouter } from './server/api.js';
 
 dotenv.config();
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 async function startServer() {
   // Initialize Database & Test Connections
