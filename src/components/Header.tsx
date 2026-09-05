@@ -10,10 +10,14 @@ import {
   CheckCircle2,
   AlertTriangle,
   X,
+  Smartphone,
+  Download,
 } from 'lucide-react';
 import { Language, translations } from '../translations';
 import { User, Vehicle, NotificationItem } from '../types';
 import { api, formatDate } from '../api';
+import { usePWAInstall } from '../hooks/usePWAInstall';
+import { AddToHomeScreenModal } from './AddToHomeScreenModal';
 
 interface Props {
   lang: Language;
@@ -39,6 +43,18 @@ export const Header: React.FC<Props> = ({
   onLogout,
 }) => {
   const t = translations[lang];
+  const {
+    isInstallable,
+    isInstalled,
+    isIOS,
+    isAndroid,
+    isInIframe,
+    showInstallGuideModal,
+    setShowInstallGuideModal,
+    triggerInstall,
+    openInNewTab,
+  } = usePWAInstall();
+
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [showRoleMenu, setShowRoleMenu] = useState(false);
   const [showNotifs, setShowNotifs] = useState(false);
@@ -152,6 +168,24 @@ export const Header: React.FC<Props> = ({
 
         {/* Global Controls: Search, Language, Notifications, Role Switcher, User */}
         <div className="flex items-center space-x-1 sm:space-x-2 shrink-0">
+          {/* Add to Home Screen / Install App Button */}
+          {!isInstalled && (
+            <button
+              type="button"
+              onClick={async () => {
+                const res = await triggerInstall();
+                if (res === 'manual') setShowInstallGuideModal(true);
+              }}
+              className="flex items-center space-x-1 sm:space-x-1.5 px-2 sm:px-2.5 py-1.5 bg-[#FFF8E7] hover:bg-[#FFEEC2] border border-[#FFD580] text-[#B45309] rounded-xl text-xs font-black shadow-2xs transition cursor-pointer active:scale-95"
+              title={lang === 'hi' ? 'गाड़ी हिसाब को होम स्क्रीन पर जोड़ें' : 'Add GAADI HISAAB to Home Screen'}
+            >
+              <Smartphone className="w-3.5 h-3.5 text-[#FF8C00] shrink-0" />
+              <span className="hidden sm:inline">
+                {lang === 'hi' ? 'होम स्क्रीन' : 'Install App'}
+              </span>
+            </button>
+          )}
+
           {/* Global Search Button */}
           <button
             onClick={onOpenSearch}
@@ -380,6 +414,19 @@ export const Header: React.FC<Props> = ({
           </div>
         </div>
       </div>
+
+      {/* Add To Home Screen Guide Modal */}
+      <AddToHomeScreenModal
+        isOpen={showInstallGuideModal}
+        onClose={() => setShowInstallGuideModal(false)}
+        lang={lang}
+        isInstallable={isInstallable}
+        isIOS={isIOS}
+        isAndroid={isAndroid}
+        isInIframe={isInIframe}
+        onNativeInstall={triggerInstall}
+        onOpenInNewTab={openInNewTab}
+      />
     </header>
   );
 };

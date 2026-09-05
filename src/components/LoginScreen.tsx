@@ -11,11 +11,15 @@ import {
   Eye,
   EyeOff,
   Lock,
-  Mail
+  Mail,
+  Smartphone,
+  Download
 } from 'lucide-react';
 import { Language } from '../translations';
 import { api, setStoredToken } from '../api';
 import { User as UserType } from '../types';
+import { usePWAInstall } from '../hooks/usePWAInstall';
+import { AddToHomeScreenModal } from './AddToHomeScreenModal';
 
 interface Props {
   lang: Language;
@@ -24,6 +28,18 @@ interface Props {
 }
 
 export const LoginScreen: React.FC<Props> = ({ lang, onLanguageChange, onLoginSuccess }) => {
+  const {
+    isInstallable,
+    isInstalled,
+    isIOS,
+    isAndroid,
+    isInIframe,
+    showInstallGuideModal,
+    setShowInstallGuideModal,
+    triggerInstall,
+    openInNewTab,
+  } = usePWAInstall();
+
   const [selectedRole, setSelectedRole] = useState<'owner' | 'driver' | 'admin'>('owner');
   const [isRegisterMode, setIsRegisterMode] = useState(false);
   
@@ -167,6 +183,36 @@ export const LoginScreen: React.FC<Props> = ({ lang, onLanguageChange, onLoginSu
 
       {/* Main Form Container */}
       <main className="max-w-md w-full mx-auto my-auto py-4">
+        {/* Prominent Add to Home Screen Banner when opening website */}
+        {!isInstalled && (
+          <div className="bg-linear-to-r from-[#FFF8E7] to-[#FFF3D6] border border-[#FFD580] rounded-2xl p-3 flex items-center justify-between gap-3 shadow-2xs mb-4">
+            <div className="flex items-center space-x-2.5 min-w-0">
+              <div className="w-8 h-8 rounded-xl bg-[#1A1A1A] text-[#FF8C00] flex items-center justify-center shrink-0">
+                <Smartphone className="w-4 h-4" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-xs font-black text-[#1A1A1A] truncate">
+                  {lang === 'hi' ? 'गाड़ी हिसाब को होम स्क्रीन पर जोड़ें' : 'Add App to Home Screen'}
+                </p>
+                <p className="text-[10px] text-[#70706B] truncate">
+                  {lang === 'hi' ? '1-टैप में सीधे डायरी खोलें, ऑफलाइन भी चलेगा' : '1-tap instant access, works offline'}
+                </p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={async () => {
+                const res = await triggerInstall();
+                if (res === 'manual') setShowInstallGuideModal(true);
+              }}
+              className="px-3 py-1.5 bg-[#FF8C00] hover:bg-[#E67E00] text-white text-xs font-black rounded-xl shrink-0 transition flex items-center space-x-1 shadow-2xs cursor-pointer active:scale-95"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>{lang === 'hi' ? 'जोड़ें' : 'Add to Home'}</span>
+            </button>
+          </div>
+        )}
+
         <div className="bg-white rounded-3xl border border-[#E5E5DF] p-6 sm:p-7 shadow-xs space-y-5">
           {/* Sign In vs Register Toggle */}
           <div className="flex bg-[#F5F5F0] p-1 rounded-2xl border border-[#E5E5DF]">
@@ -447,6 +493,19 @@ export const LoginScreen: React.FC<Props> = ({ lang, onLanguageChange, onLoginSu
           GAADI HISAAB • {lang === 'hi' ? 'कमर्शियल वाहन और ट्रांसपोर्टर का डिजिटल हिसाब' : 'Commercial Vehicle Transport Management'}
         </p>
       </footer>
+
+      {/* Guide Modal */}
+      <AddToHomeScreenModal
+        isOpen={showInstallGuideModal}
+        onClose={() => setShowInstallGuideModal(false)}
+        lang={lang}
+        isInstallable={isInstallable}
+        isIOS={isIOS}
+        isAndroid={isAndroid}
+        isInIframe={isInIframe}
+        onNativeInstall={triggerInstall}
+        onOpenInNewTab={openInNewTab}
+      />
     </div>
   );
 };

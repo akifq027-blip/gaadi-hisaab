@@ -1,128 +1,125 @@
-import React, { useState } from 'react';
-import { Download, Share, PlusSquare, X } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Smartphone, Download, X, ArrowRight, Truck } from 'lucide-react';
 import { usePWAInstall } from '../hooks/usePWAInstall';
-import { Language, translations } from '../translations';
+import { AddToHomeScreenModal } from './AddToHomeScreenModal';
+import { Language } from '../translations';
 
 interface Props {
   lang: Language;
 }
 
 export const PWAInstallBanner: React.FC<Props> = ({ lang }) => {
-  const { isInstallable, isInstalled, isIOS, triggerInstall } = usePWAInstall();
-  const [showIOSModal, setShowIOSModal] = useState(false);
-  const [isDismissed, setIsDismissed] = useState(false);
-  const t = translations[lang];
+  const {
+    isInstallable,
+    isInstalled,
+    isIOS,
+    isAndroid,
+    isInIframe,
+    showInstallGuideModal,
+    setShowInstallGuideModal,
+    triggerInstall,
+    openInNewTab,
+  } = usePWAInstall();
 
-  if (isInstalled || isDismissed || (!isInstallable && !isIOS)) {
-    return null;
-  }
+  const [isDismissed, setIsDismissed] = useState<boolean>(() => {
+    return sessionStorage.getItem('gaadi_pwa_banner_dismissed') === 'true';
+  });
 
-  const handleInstallClick = () => {
-    if (isIOS) {
-      setShowIOSModal(true);
-    } else {
-      triggerInstall();
+  const handleDismiss = () => {
+    setIsDismissed(true);
+    sessionStorage.setItem('gaadi_pwa_banner_dismissed', 'true');
+  };
+
+  const handleOpenInstall = async () => {
+    const res = await triggerInstall();
+    if (res === 'manual') {
+      setShowInstallGuideModal(true);
     }
   };
 
+  // If already running as an installed PWA, do not show the banner
+  if (isInstalled || isDismissed) {
+    return (
+      <AddToHomeScreenModal
+        isOpen={showInstallGuideModal}
+        onClose={() => setShowInstallGuideModal(false)}
+        lang={lang}
+        isInstallable={isInstallable}
+        isIOS={isIOS}
+        isAndroid={isAndroid}
+        isInIframe={isInIframe}
+        onNativeInstall={triggerInstall}
+        onOpenInNewTab={openInNewTab}
+      />
+    );
+  }
+
   return (
     <>
-      <div className="bg-amber-600 text-white px-4 py-2.5 flex items-center justify-between shadow-md text-sm sticky top-0 z-30 animate-in fade-in slide-in-from-top duration-300">
-        <div className="flex items-center space-x-3 overflow-hidden">
-          <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center shrink-0">
-            <Download className="w-4 h-4 text-white" />
+      <div className="bg-[#1A1A1A] text-white px-3 sm:px-4 py-2.5 shadow-md sticky top-0 z-30 border-b border-[#333] transition-all">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2.5">
+          {/* Left Icon & Text */}
+          <div className="flex items-center space-x-2.5 min-w-0">
+            <div className="w-8 h-8 rounded-xl bg-[#FF8C00] text-white flex items-center justify-center shrink-0 shadow-xs">
+              <Smartphone className="w-4 h-4 text-white" />
+            </div>
+            <div className="min-w-0">
+              <div className="flex items-center space-x-1.5">
+                <span className="text-xs font-black text-white truncate">
+                  {lang === 'hi' ? 'गाड़ी हिसाब ऐप को होम स्क्रीन पर जोड़ें' : 'Add GAADI HISAAB to Home Screen'}
+                </span>
+                <span className="hidden md:inline-block bg-[#FF8C00]/20 text-[#FF8C00] text-[10px] font-black px-1.5 py-0.2 rounded border border-[#FF8C00]/40">
+                  PWA
+                </span>
+              </div>
+              <p className="text-[11px] text-[#A0A09B] hidden sm:block truncate">
+                {lang === 'hi'
+                  ? 'मोबाइल ऐप की तरह 1-टैप में खोलें, बिना इंटरनेट भी चलेगा।'
+                  : 'Install on your device for fast 1-tap diary access & offline sync.'}
+              </p>
+            </div>
           </div>
-          <div className="truncate">
-            <p className="font-semibold text-xs sm:text-sm truncate">
-              {t.installApp}
-            </p>
-            <p className="text-[11px] text-amber-100 hidden sm:block truncate">
-              {t.installAppDesc}
-            </p>
-          </div>
-        </div>
 
-        <div className="flex items-center space-x-2 shrink-0">
-          <button
-            onClick={handleInstallClick}
-            className="bg-white text-amber-900 hover:bg-amber-50 font-bold px-3 py-1.5 rounded-lg text-xs shadow transition-all active:scale-95"
-          >
-            {isIOS ? 'Install (iOS)' : 'Install App'}
-          </button>
-          <button
-            onClick={() => setIsDismissed(true)}
-            className="text-white/80 hover:text-white p-1 rounded-md"
-            title="Dismiss"
-          >
-            <X className="w-4 h-4" />
-          </button>
+          {/* Right Action Buttons */}
+          <div className="flex items-center space-x-2 shrink-0">
+            <button
+              type="button"
+              onClick={handleOpenInstall}
+              className="bg-[#FF8C00] hover:bg-[#E67E00] text-white font-black px-3 py-1.5 rounded-xl text-xs shadow-xs transition active:scale-[0.98] flex items-center space-x-1.5 cursor-pointer"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>
+                {lang === 'hi'
+                  ? 'होम स्क्रीन पर जोड़ें'
+                  : 'Add to Home Screen'}
+              </span>
+            </button>
+
+            <button
+              type="button"
+              onClick={handleDismiss}
+              className="text-[#A0A09B] hover:text-white p-1 rounded-lg transition cursor-pointer"
+              title="Dismiss"
+              aria-label="Dismiss banner"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* iOS Manual Install Guide Modal */}
-      {showIOSModal && (
-        <div className="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-4 backdrop-blur-xs">
-          <div className="bg-white rounded-2xl p-6 max-w-sm w-full text-slate-800 shadow-2xl relative">
-            <button
-              onClick={() => setShowIOSModal(false)}
-              className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            <div className="text-center mb-4">
-              <div className="w-14 h-14 bg-amber-100 rounded-2xl flex items-center justify-center mx-auto mb-3">
-                <span className="text-2xl font-black text-amber-700">GH</span>
-              </div>
-              <h3 className="text-lg font-bold text-slate-900">Install Gaadi Hisaab</h3>
-              <p className="text-xs text-slate-500 mt-1">
-                Install as a native app on your iPhone or iPad for quick 1-tap diary access
-              </p>
-            </div>
-
-            <div className="space-y-3 text-xs text-slate-700 bg-slate-50 p-4 rounded-xl border border-slate-100 mb-5">
-              <div className="flex items-center space-x-3">
-                <span className="w-6 h-6 rounded-full bg-amber-600 text-white flex items-center justify-center font-bold text-[11px] shrink-0">
-                  1
-                </span>
-                <p>
-                  Tap the <Share className="w-3.5 h-3.5 inline mx-1 text-blue-600" />{' '}
-                  <strong>Share</strong> button at bottom of Safari.
-                </p>
-              </div>
-
-              <div className="flex items-center space-x-3">
-                <span className="w-6 h-6 rounded-full bg-amber-600 text-white flex items-center justify-center font-bold text-[11px] shrink-0">
-                  2
-                </span>
-                <p>
-                  Scroll down and tap{' '}
-                  <strong className="inline-flex items-center">
-                    <PlusSquare className="w-3.5 h-3.5 inline mr-1 text-slate-800" /> Add to Home Screen
-                  </strong>
-                  .
-                </p>
-              </div>
-
-              <div className="flex items-center space-x-3">
-                <span className="w-6 h-6 rounded-full bg-amber-600 text-white flex items-center justify-center font-bold text-[11px] shrink-0">
-                  3
-                </span>
-                <p>
-                  Tap <strong>Add</strong> at top-right corner. Done! 🚚
-                </p>
-              </div>
-            </div>
-
-            <button
-              onClick={() => setShowIOSModal(false)}
-              className="w-full py-2.5 bg-amber-600 text-white rounded-xl font-semibold text-sm hover:bg-amber-700 transition"
-            >
-              Got it!
-            </button>
-          </div>
-        </div>
-      )}
+      {/* Guide Modal */}
+      <AddToHomeScreenModal
+        isOpen={showInstallGuideModal}
+        onClose={() => setShowInstallGuideModal(false)}
+        lang={lang}
+        isInstallable={isInstallable}
+        isIOS={isIOS}
+        isAndroid={isAndroid}
+        isInIframe={isInIframe}
+        onNativeInstall={triggerInstall}
+        onOpenInNewTab={openInNewTab}
+      />
     </>
   );
 };

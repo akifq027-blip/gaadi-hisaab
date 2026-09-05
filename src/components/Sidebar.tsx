@@ -17,9 +17,12 @@ import {
   Settings,
   PlusCircle,
   Building2,
+  Smartphone,
 } from 'lucide-react';
 import { Language, translations } from '../translations';
 import { User } from '../types';
+import { usePWAInstall } from '../hooks/usePWAInstall';
+import { AddToHomeScreenModal } from './AddToHomeScreenModal';
 
 interface Props {
   currentTab: string;
@@ -38,6 +41,17 @@ export const Sidebar: React.FC<Props> = ({
 }) => {
   const t = translations[lang];
   const isDriver = user?.role === 'driver';
+  const {
+    isInstallable,
+    isInstalled,
+    isIOS,
+    isAndroid,
+    isInIframe,
+    showInstallGuideModal,
+    setShowInstallGuideModal,
+    triggerInstall,
+    openInNewTab,
+  } = usePWAInstall();
 
   const navItemClass = (tab: string) => `
     flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
@@ -169,6 +183,19 @@ export const Sidebar: React.FC<Props> = ({
               <ShieldCheck className="w-4 h-4" />
               <span>Admin Panel</span>
             </button>
+            {!isInstalled && (
+              <button
+                type="button"
+                onClick={async () => {
+                  const res = await triggerInstall();
+                  if (res === 'manual') setShowInstallGuideModal(true);
+                }}
+                className="w-full mt-2 flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-xs font-bold text-[#FF8C00] bg-[#FF8C00]/10 hover:bg-[#FF8C00]/20 border border-[#FF8C00]/30 transition cursor-pointer"
+              >
+                <Smartphone className="w-4 h-4 text-[#FF8C00]" />
+                <span>{lang === 'hi' ? 'होम स्क्रीन पर जोड़ें' : 'Add to Home Screen'}</span>
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -185,6 +212,19 @@ export const Sidebar: React.FC<Props> = ({
           </p>
         </div>
       </div>
+
+      {/* Modal */}
+      <AddToHomeScreenModal
+        isOpen={showInstallGuideModal}
+        onClose={() => setShowInstallGuideModal(false)}
+        lang={lang}
+        isInstallable={isInstallable}
+        isIOS={isIOS}
+        isAndroid={isAndroid}
+        isInIframe={isInIframe}
+        onNativeInstall={triggerInstall}
+        onOpenInNewTab={openInNewTab}
+      />
     </aside>
   );
 };

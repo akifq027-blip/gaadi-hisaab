@@ -32,6 +32,8 @@ import { BillModal } from './components/BillModal';
 import { BiltyModal } from './components/BiltyModal';
 import { WhatsAppShareModal } from './components/WhatsAppShareModal';
 import { SearchModal } from './components/SearchModal';
+import { AddToHomeScreenModal } from './components/AddToHomeScreenModal';
+import { usePWAInstall } from './hooks/usePWAInstall';
 
 // APIs & Types
 import { api, formatINR, formatDate, getStoredToken } from './api';
@@ -50,10 +52,23 @@ import {
   Share2,
   Calendar,
   AlertCircle,
-  Printer
+  Printer,
+  Smartphone
 } from 'lucide-react';
 
 export default function App() {
+  const {
+    isInstallable,
+    isInstalled,
+    isIOS,
+    isAndroid,
+    isInIframe,
+    showInstallGuideModal,
+    setShowInstallGuideModal,
+    triggerInstall,
+    openInNewTab,
+  } = usePWAInstall();
+
   const [lang, setLang] = useState<Language>(() => {
     return (localStorage.getItem('gaadi_lang') as Language) || 'hi';
   });
@@ -611,6 +626,36 @@ export default function App() {
         return (
           <div className="space-y-4">
             <h1 className="text-xl font-black text-[#1A1A1A]">Transport Menu & Modules</h1>
+
+            {/* Install / Add to Home Screen Option */}
+            {!isInstalled && (
+              <div className="bg-linear-to-r from-[#FFF8E7] to-[#FFF3D6] border border-[#FFD580] rounded-2xl p-4 flex items-center justify-between gap-3 shadow-2xs">
+                <div className="flex items-center space-x-3 min-w-0">
+                  <div className="w-10 h-10 rounded-2xl bg-[#1A1A1A] text-[#FF8C00] flex items-center justify-center shrink-0 shadow-xs">
+                    <Smartphone className="w-5 h-5 text-[#FF8C00]" />
+                  </div>
+                  <div className="min-w-0">
+                    <h3 className="text-sm font-black text-[#1A1A1A] truncate">
+                      {lang === 'hi' ? 'गाड़ी हिसाब को होम स्क्रीन पर जोड़ें' : 'Add GAADI HISAAB to Home Screen'}
+                    </h3>
+                    <p className="text-xs text-[#70706B] truncate">
+                      {lang === 'hi' ? 'फोन पर 1-टैप में ऐप खोलें, बिना इंटरनेट भी चलेगा।' : 'Fast 1-tap diary on your phone, works offline.'}
+                    </p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={async () => {
+                    const res = await triggerInstall();
+                    if (res === 'manual') setShowInstallGuideModal(true);
+                  }}
+                  className="px-3.5 py-2 bg-[#FF8C00] hover:bg-[#E67E00] text-white text-xs font-black rounded-xl shrink-0 transition shadow-xs cursor-pointer active:scale-95"
+                >
+                  {lang === 'hi' ? 'जोड़ें (Install)' : 'Install App'}
+                </button>
+              </div>
+            )}
+
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {[
                 { tab: 'customers', icon: '👥', label: 'Customers & Udhaar', desc: 'Party khata book' },
@@ -814,6 +859,19 @@ export default function App() {
           setIsSearchModalOpen(false);
           setCurrentTab('customers');
         }}
+      />
+
+      {/* Add To Home Screen Guide Modal */}
+      <AddToHomeScreenModal
+        isOpen={showInstallGuideModal}
+        onClose={() => setShowInstallGuideModal(false)}
+        lang={lang}
+        isInstallable={isInstallable}
+        isIOS={isIOS}
+        isAndroid={isAndroid}
+        isInIframe={isInIframe}
+        onNativeInstall={triggerInstall}
+        onOpenInNewTab={openInNewTab}
       />
     </div>
   );
